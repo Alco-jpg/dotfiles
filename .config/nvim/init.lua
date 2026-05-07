@@ -18,6 +18,9 @@ vim.pack.add({
     { src = 'https://github.com/saghen/blink.lib' },
     { src = 'https://github.com/saghen/blink.cmp' },
 
+    -- AI Inline Completion
+    { src = 'https://github.com/supermaven-inc/supermaven-nvim' },
+
     -- Catppuccin Theme
     { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
 })

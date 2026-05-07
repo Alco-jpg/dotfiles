@@ -1,3 +1,8 @@
+local ok, ts = pcall(require, 'nvim-treesitter.configs')
+if ok then
+    ts.setup({ indent = { enable = true } })
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function(args)

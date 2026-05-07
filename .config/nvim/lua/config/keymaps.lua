@@ -9,6 +9,11 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
+keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down half page (centered)" })
+keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half page (centered)" })
+
+keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Close buffer" })
+
 -- Grep from project root (git root > package.json > pom.xml > cwd)
 keymap("n", "<space><space>", function()
     local root = vim.fs.root(0, { '.git', 'package.json', 'pom.xml' }) or vim.fn.getcwd()

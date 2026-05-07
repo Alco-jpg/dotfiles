@@ -1,6 +1,14 @@
 require('mini.icons').setup()
 require('mini.ai').setup({ n_lines = 50 })
 require('mini.surround').setup()
+require('mini.pairs').setup()
+require('mini.comment').setup()
+require('mini.diff').setup({
+    view = {
+        style = 'sign',
+        signs = { add = '▎', change = '▎', delete = '' },
+    },
+})
 require('mini.statusline').setup()
 
 require('mini.files').setup({
@@ -37,10 +45,26 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
-require('mini.pick').setup()
+require('mini.pick').setup({
+    window = {
+        config = function()
+            local height = math.floor(vim.o.lines * 0.5)
+            local width = math.floor(vim.o.columns * 0.6)
+            return {
+                anchor = 'NW',
+                height = height,
+                width = width,
+                row = math.floor((vim.o.lines - height) / 2),
+                col = math.floor((vim.o.columns - width) / 2),
+            }
+        end,
+    },
+})
 
 vim.keymap.set("n", "<leader>sf", "<cmd>Pick files<CR>",      { desc = "Search files" })
 vim.keymap.set("n", "<leader>sb", "<cmd>Pick buffers<CR>",    { desc = "Search buffers" })
 vim.keymap.set("n", "<leader>sg", "<cmd>Pick grep_live<CR>",  { desc = "Search grep (cwd)" })
 vim.keymap.set("n", "<leader>sh", "<cmd>Pick help<CR>",       { desc = "Search help" })
 vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic<CR>", { desc = "Search diagnostics" })
+vim.keymap.set("n", "<leader>s.", "<cmd>Pick oldfiles<CR>",   { desc = "Recent files" })
+vim.keymap.set("n", "<leader>sr", "<cmd>Pick resume<CR>",    { desc = "Resume last search" })

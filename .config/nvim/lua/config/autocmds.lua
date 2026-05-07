@@ -9,12 +9,28 @@ api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-local format_group = api.nvim_create_augroup("LspFormatting", { clear = true })
+local lsp_group = api.nvim_create_augroup("LspFormatting", { clear = true })
 api.nvim_create_autocmd("LspAttach", {
-    group = format_group,
+    group = lsp_group,
     callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        
+
+        local map = function(keys, fn, desc)
+            vim.keymap.set('n', keys, fn, { buffer = ev.buf, desc = desc })
+        end
+
+        map('gd',         vim.lsp.buf.definition,      'Go to definition')
+        map('gD',         vim.lsp.buf.declaration,     'Go to declaration')
+        map('gr',         vim.lsp.buf.references,      'Go to references')
+        map('gi',         vim.lsp.buf.implementation,  'Go to implementation')
+        map('K',          vim.lsp.buf.hover,           'Hover docs')
+        map('<leader>rn', vim.lsp.buf.rename,          'Rename symbol')
+        map('<leader>ca', vim.lsp.buf.code_action,     'Code actions')
+        map('<leader>dt', vim.lsp.buf.type_definition, 'Go to type definition')
+        map('<leader>ds', function()
+            require('mini.pick').builtin.lsp({ scope = 'document_symbol' })
+        end, 'Document symbols')
+
         -- Verifies the attached server actually supports document formatting.
         if client and client:supports_method("textDocument/formatting") then
             api.nvim_create_autocmd("BufWritePre", {
