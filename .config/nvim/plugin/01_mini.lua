@@ -67,3 +67,14 @@ vim.keymap.set("n", "<leader>sh", "<cmd>Pick help<CR>",       { desc = "Search h
 vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic<CR>", { desc = "Search diagnostics" })
 vim.keymap.set("n", "<leader>s.", "<cmd>Pick oldfiles<CR>",   { desc = "Recent files" })
 vim.keymap.set("n", "<leader>sr", "<cmd>Pick resume<CR>",     { desc = "Resume last search" })
+
+require('mini.clue').setup({
+    triggers = {
+        { mode = 'n', keys = '<Leader>' },
+        { mode = 'x', keys = '<Leader>' },
+    },
+    window = {
+        delay = 400,
+        config = { width = 'auto' },
+    },
+})
