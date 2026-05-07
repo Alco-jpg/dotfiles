@@ -40,8 +40,8 @@ vim.api.nvim_create_autocmd("User", {
                 dir = vim.fn.getcwd()
             end
             require('mini.files').close()
-            require('mini.pick').builtin.grep_live(nil, { source = { cwd = dir } })
-        end, { buffer = buf, desc = "Grep from hovered folder" })
+            require('fzf-lua').grep_project({ cwd = dir })
+        end, { buffer = buf, desc = "Fuzzy grep from hovered folder" })
     end,
 })
 
@@ -63,8 +63,7 @@ require('mini.pick').setup({
 
 vim.keymap.set("n", "<leader>sf", "<cmd>Pick files<CR>",      { desc = "Search files" })
 vim.keymap.set("n", "<leader>sb", "<cmd>Pick buffers<CR>",    { desc = "Search buffers" })
-vim.keymap.set("n", "<leader>sg", "<cmd>Pick grep_live<CR>",  { desc = "Search grep (cwd)" })
 vim.keymap.set("n", "<leader>sh", "<cmd>Pick help<CR>",       { desc = "Search help" })
 vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic<CR>", { desc = "Search diagnostics" })
 vim.keymap.set("n", "<leader>s.", "<cmd>Pick oldfiles<CR>",   { desc = "Recent files" })
-vim.keymap.set("n", "<leader>sr", "<cmd>Pick resume<CR>",    { desc = "Resume last search" })
+vim.keymap.set("n", "<leader>sr", "<cmd>Pick resume<CR>",     { desc = "Resume last search" })

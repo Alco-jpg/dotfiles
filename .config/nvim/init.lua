@@ -21,6 +21,9 @@ vim.pack.add({
     -- AI Inline Completion
     { src = 'https://github.com/supermaven-inc/supermaven-nvim' },
 
+    -- Fuzzy Finder
+    { src = 'https://github.com/ibhagwan/fzf-lua' },
+
     -- Catppuccin Theme
     { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
 })
