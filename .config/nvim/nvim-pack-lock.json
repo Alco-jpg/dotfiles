@@ -8,6 +8,10 @@
       "rev": "f29d8bac6549bc1e7d699c83f680823d7def98bd",
       "src": "https://github.com/saghen/blink.lib"
     },
+    "catppuccin": {
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "mason.nvim": {
       "rev": "cb8445f8ce85d957416c106b780efd51c6298f89",
       "src": "https://github.com/mason-org/mason.nvim"

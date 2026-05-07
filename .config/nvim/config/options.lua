@@ -2,7 +2,7 @@
 local opt = vim.opt
 
 opt.number = true
-opt.relativenumber = ture
+opt.relativenumber = true
 opt.signcolumn = "yes"
 
 opt.tabstop = 4

@@ -17,6 +17,9 @@ vim.pack.add({
     -- High-Velocity SIMD Completion Engine 
     { src = 'https://github.com/saghen/blink.lib' },
     { src = 'https://github.com/saghen/blink.cmp' },
+
+    -- Catppuccin Theme
+    { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
 })
 
 require("config.options")

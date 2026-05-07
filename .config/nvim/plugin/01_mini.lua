@@ -1,18 +1,8 @@
--- ~/.config/nvim/plugin/01_mini.lua
-
--- Initializes the native icon provider for subsequent UI plugins.
 require('mini.icons').setup()
-
--- Enhances native textobjects for advanced semantic selections.
 require('mini.ai').setup({ n_lines = 50 })
-
--- Activates abstract surround editing actions.
 require('mini.surround').setup()
-
--- Deploys the dynamically adapting minimalistic statusline.
 require('mini.statusline').setup()
 
--- Instantiates the Miller column filesystem explorer.
 require('mini.files').setup({
     mappings = {
         close       = 'q',
@@ -21,15 +11,36 @@ require('mini.files').setup({
         go_out      = 'h',
         go_out_plus = 'H',
     },
-    windows = {
-        preview = true, -- Enables opt-in file preview pane logic.
-    }
+    windows = { preview = true },
 })
 
--- Establishes a keymap to toggle the filesystem explorer interactively.
-vim.keymap.set("n", "<leader>pv", function() require("mini.files").open() end, { desc = "Open Mini Files" })
+vim.keymap.set("n", "<leader>e", function()
+    local mf = require('mini.files')
+    if not mf.close() then mf.open() end
+end, { desc = "Toggle file tree" })
 
--- Instantiates the high-performance fuzzy picker.
+vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesBufferCreate",
+    callback = function(args)
+        local buf = args.data.buf_id
+        vim.keymap.set("n", "<space><space>", function()
+            local entry = require('mini.files').get_fs_entry()
+            local dir
+            if entry then
+                dir = entry.fs_type == 'directory' and entry.path or vim.fs.dirname(entry.path)
+            else
+                dir = vim.fn.getcwd()
+            end
+            require('mini.files').close()
+            require('mini.pick').builtin.grep_live(nil, { source = { cwd = dir } })
+        end, { buffer = buf, desc = "Grep from hovered folder" })
+    end,
+})
+
 require('mini.pick').setup()
-vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>", { desc = "Find Files" })
-vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>", { desc = "Live Grep" })
+
+vim.keymap.set("n", "<leader>sf", "<cmd>Pick files<CR>",      { desc = "Search files" })
+vim.keymap.set("n", "<leader>sb", "<cmd>Pick buffers<CR>",    { desc = "Search buffers" })
+vim.keymap.set("n", "<leader>sg", "<cmd>Pick grep_live<CR>",  { desc = "Search grep (cwd)" })
+vim.keymap.set("n", "<leader>sh", "<cmd>Pick help<CR>",       { desc = "Search help" })
+vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic<CR>", { desc = "Search diagnostics" })
