@@ -14,6 +14,20 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half page (centered)" })
 
 keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Close buffer" })
 
-keymap("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic error float" })
-keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+-- Buffer cycling
+keymap("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
+keymap("n", "<S-l>", "<cmd>bnext<CR>",     { desc = "Next buffer" })
+
+-- Diagnostics (updated to non-deprecated API)
+keymap("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic float" })
+keymap("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Prev diagnostic" })
+keymap("n", "]d", function() vim.diagnostic.jump({ count =  1, float = true }) end, { desc = "Next diagnostic" })
+
+-- Quickfix list navigation
+keymap("n", "]q", "<cmd>cnext<CR>", { desc = "Next quickfix" })
+keymap("n", "[q", "<cmd>cprev<CR>", { desc = "Prev quickfix" })
+
+-- Toggle inlay hints globally
+keymap("n", "<leader>ih", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle inlay hints" })

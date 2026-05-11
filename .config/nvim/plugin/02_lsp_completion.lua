@@ -1,20 +1,18 @@
--- ~/.config/nvim/plugin/03_lsp_completion.lua
-
--- Initializes Mason to handle the downloading of external LSP binaries from upstream registries.
 require('mason').setup()
 
--- Java: per-project workspace so jdtls doesn't mix indexing across repos
+-- Java: use SHA256 of the full cwd path to avoid collisions between
+-- two projects with the same directory basename (e.g. ~/work/api vs ~/personal/api)
 vim.lsp.config('jdtls', {
     cmd = {
         'jdtls',
-        '-data', vim.fn.expand('~/.local/share/jdtls/workspaces/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')),
+        '-data', vim.fn.expand('~/.local/share/jdtls/workspaces/' .. vim.fn.sha256(vim.fn.getcwd())),
     },
 })
 
 vim.lsp.config('lua_ls', {
     settings = {
         Lua = {
-            runtime = { version = 'LuaJIT' },
+            runtime   = { version = 'LuaJIT' },
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
         },
@@ -23,21 +21,29 @@ vim.lsp.config('lua_ls', {
 
 vim.lsp.enable({ 'ts_ls', 'jdtls', 'lua_ls', 'cssls', 'html', 'jsonls', 'eslint' })
 
--- Initializes the blink.cmp completion engine.
 require('blink.cmp').setup({
     keymap = { preset = 'default' },
-    
+
     appearance = {
-        -- Overrides default behaviors to closely mimic the legacy nvim-cmp visual style.
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = 'mono'
+        nerd_font_variant = 'mono',
     },
-    
-    -- Specifies the hierarchy and prioritization of autocompletion sources.
+
     sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+            -- Neovim Lua API completions; ranked above LSP to avoid noise
+            lazydev = {
+                name   = 'LazyDev',
+                module = 'lazydev.integrations.blink',
+                score_offset = 100,
+            },
+            -- Enable friendly-snippets library
+            snippets = {
+                opts = { friendly_snippets = true },
+            },
+        },
     },
-    
-    -- Activates experimental signature help integration directly attached to the prompt.
-    signature = { enabled = true }
+
+    signature = { enabled = true },
 })

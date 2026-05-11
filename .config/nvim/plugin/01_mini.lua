@@ -12,7 +12,7 @@ require('mini.surround').setup({
     },
 })
 require('mini.pairs').setup()
-require('mini.comment').setup()
+-- mini.comment removed: Neovim 0.10+ ships gc/gcc natively
 require('mini.diff').setup({
     view = {
         style = 'sign',
@@ -108,6 +108,9 @@ clue.setup({
         { mode = 'n', keys = '<Leader>d', desc = '+diagnostics' },
         { mode = 'n', keys = '<Leader>p', desc = '+packages' },
         { mode = 'n', keys = '<Leader>r', desc = '+rename/refactor' },
+        { mode = 'n', keys = '<Leader>h', desc = '+hunks' },
+        { mode = 'n', keys = '<Leader>m', desc = '+marks (harpoon)' },
+        { mode = 'n', keys = '<Leader>x', desc = '+trouble' },
         clue.gen_clues.g(),
         clue.gen_clues.z(),
         clue.gen_clues.windows(),
