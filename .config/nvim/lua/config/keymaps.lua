@@ -14,12 +14,6 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half page (centered)" })
 
 keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Close buffer" })
 
--- Grep from project root (git root > package.json > pom.xml > cwd)
-keymap("n", "<space><space>", function()
-    local root = vim.fs.root(0, { '.git', 'package.json', 'pom.xml' }) or vim.fn.getcwd()
-    require('mini.pick').builtin.grep_live(nil, { source = { cwd = root } })
-end, { desc = "Grep from project root" })
-
 keymap("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic error float" })
 keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })

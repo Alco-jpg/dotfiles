@@ -31,15 +31,5 @@ api.nvim_create_autocmd("LspAttach", {
             require('mini.pick').builtin.lsp({ scope = 'document_symbol' })
         end, 'Document symbols')
 
-        -- Verifies the attached server actually supports document formatting.
-        if client and client:supports_method("textDocument/formatting") then
-            api.nvim_create_autocmd("BufWritePre", {
-                buffer = ev.buf,
-                callback = function()
-                    -- Synchronous formatting operation; guarantees the process blocks the file save until completion.
-                    vim.lsp.buf.format({ async = false, bufnr = ev.buf })
-                end,
-            })
-        end
     end,
 })

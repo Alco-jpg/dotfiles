@@ -11,7 +11,17 @@ vim.lsp.config('jdtls', {
     },
 })
 
-vim.lsp.enable({ 'ts_ls', 'jdtls' })
+vim.lsp.config('lua_ls', {
+    settings = {
+        Lua = {
+            runtime = { version = 'LuaJIT' },
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+        },
+    },
+})
+
+vim.lsp.enable({ 'ts_ls', 'jdtls', 'lua_ls', 'cssls', 'html', 'jsonls', 'eslint' })
 
 -- Initializes the blink.cmp completion engine.
 require('blink.cmp').setup({

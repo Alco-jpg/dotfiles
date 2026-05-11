@@ -12,6 +12,10 @@
       "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
       "src": "https://github.com/catppuccin/nvim"
     },
+    "conform.nvim": {
+      "rev": "dca1a190aa85f9065979ef35802fb77131911106",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
     "fzf-lua": {
       "rev": "33fe4b6f0c817c4d99a7baeea82c4d17e57efd64",
       "src": "https://github.com/ibhagwan/fzf-lua"

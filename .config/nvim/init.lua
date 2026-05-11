@@ -21,6 +21,9 @@ vim.pack.add({
     -- AI Inline Completion
     { src = 'https://github.com/supermaven-inc/supermaven-nvim' },
 
+    -- Formatter
+    { src = 'https://github.com/stevearc/conform.nvim' },
+
     -- Fuzzy Finder
     { src = 'https://github.com/ibhagwan/fzf-lua' },
 
