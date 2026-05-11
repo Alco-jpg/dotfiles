@@ -29,5 +29,8 @@ end
 -- Render markdown headings, code fences, and tables in-buffer
 local ok_rm = pcall(require, 'render-markdown')
 if ok_rm then
-    require('render-markdown').setup()
+    require('render-markdown').setup({
+        latex = { enabled = false },
+        yaml  = { enabled = false },
+    })
 end
